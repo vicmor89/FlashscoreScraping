@@ -6,7 +6,7 @@ import { BASE_URL } from "../constants/index.js";
 export const getMatchIdList = async (browser, country, league) => {
   const page = await browser.newPage();
 
-  const url = `${BASE_URL}/football/${country}/${league}/results/`;
+  const url = `${BASE_URL}/football/${country}/${league}/fixtures/`;
   await page.goto(url);
 
   while (true) {
@@ -23,7 +23,7 @@ export const getMatchIdList = async (browser, country, league) => {
   }
 
   const matchIdList = await page.evaluate(_ => {
-    return Array.from(document.querySelectorAll(".event__match.event__match--static.event__match--twoLine"))
+    return Array.from(document.querySelectorAll(".event__match.event__match--static.event__match--scheduled.event__match--twoLine"))
       .map(element => element?.id?.replace("g_1_", ""));
   });
 
